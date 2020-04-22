@@ -26,8 +26,8 @@ data_list = all_data.findAll('li')
 col = 1
 row = 1
 for data in data_list:
-    img_list = data.find('img')
-    img_src = img_list['src']
+    img_data = data.find('img')
+    img_src = img_data['src']
     a_list = data.find('a')
     title = a_list['title']
     title = re.sub('[^0-9a-zA-Zㄱ-힗]', '', title)
