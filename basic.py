@@ -1,11 +1,8 @@
 # web 기본
 # import time
-# # 해시태그를 분석하기 위한 Twitter 모듈
-# #from konlpy.tag import Twitter
 # # 크롬 브라우저 조작을 위한 모듈
 # from selenium import webdriver
-# # 페이지 스크롤링을 위한 모듈
-# from selenium.webdriver.common.keys import Keys
+
 # # 크롤링할 url 주소
 # url = "https://www.instagram.com/explore/tags/python/"
 #
@@ -17,3 +14,15 @@
 # # 총 게시물 수를 클래스 이름으로 찾기
 # totalCount = driver.find_element_by_class_name('g47SY').text
 # print("총 게시물:", totalCount)
+
+#999  웹상의 요소값 가져오기 selector
+#from selenium import webdriver
+#
+# driver = webdriver.Chrome('./chromedriver')
+#
+# driver.get('http://v.media.daum.net/v/20170202180355822')
+#
+# # 클래스가 tit_view인 h3태그
+# title = driver.find_element_by_css_selector("h3.tit_view")
+# print (title.text)
+# driver.quit()
