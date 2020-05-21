@@ -1,4 +1,4 @@
-# web 기본
+# 999 클래스 이름으로 해당html 가져오기
 # import time
 # # 크롬 브라우저 조작을 위한 모듈
 # from selenium import webdriver
@@ -15,7 +15,7 @@
 # totalCount = driver.find_element_by_class_name('g47SY').text
 # print("총 게시물:", totalCount)
 
-#999  웹상의 요소값 가져오기 selector
+#999  웹상의 요소값 가져오기 selector 특정 text 값을 쉽게
 #from selenium import webdriver
 #
 # driver = webdriver.Chrome('./chromedriver')
@@ -26,3 +26,18 @@
 # title = driver.find_element_by_css_selector("h3.tit_view")
 # print (title.text)
 # driver.quit()
+
+# 999 웹 입력 클릭
+# from selenium import webdriver
+# import time
+#
+# driver = webdriver.Chrome('./chromedriver')
+#
+# # 파파고 접속
+# driver.get('https://papago.naver.com/')
+#
+# # 번역할 문장 입력
+# driver.find_element_by_xpath('//*[@id="sourceEditArea"]').send_keys('II    I love koala study')
+# # 가끔 실행오류가 나는 경우가 생기고, send key에서 첫글자는 전송이 안되는 문제 있음.
+# # 번역 버튼 클릭
+# driver.find_element_by_css_selector('#btnTranslate').click()
