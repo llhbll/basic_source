@@ -1,77 +1,27 @@
-from selenium import webdriver
-import requests, re
-from bs4 import BeautifulSoup
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+# 999 포탈 자동로그인 IE는 에러가 계속나서 전자결재는 OPEN안함
+import os
+import sys
 import time
-from openpyxl import Workbook, load_workbook
 
-wb  = Workbook()
-sheet1 = wb.active
-sheet1.title = '중고나라 상품' #시트명
-sheet1.cell(row=1, column=2).value = '제목'
-sheet1.cell(row=1, column=3).value = '작성자'
-sheet1.cell(row=1, column=4).value = '날짜'
-sheet1.cell(row=1, column=5).value = '가격'
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
+#pyinstaller --noconsole --onefile --add-binary "chromedriver.exe";"." gmail_auto.py
+if getattr(sys, 'frozen', False):
+    chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe")
+    driver = webdriver.Chrome(chromedriver_path)
+else:
+    driver = webdriver.Chrome()
 
-driver = webdriver.Chrome('./chromedriver.exe')
-driver2 = webdriver.Chrome('./chromedriver.exe')
+url = 'https://portal.sungshin.ac.kr/sso/login.jsp'
+driver.get(url)
+action = ActionChains(driver)
+driver.implicitly_wait(10)
+driver.find_element_by_css_selector('#loginId_mobile').click()
 
-joonggonara_url = 'https://cafe.naver.com/joonggonara.cafe?iframe_url=/ArticleList.nhn%3Fsearch.clubid=10050146%26search.boardtype=L%26viewType=pc'
-
-driver.get(joonggonara_url)
-
-# keyword = input("키워드 입력 : ")
-search_input = driver.find_element_by_css_selector('input#topLayerQueryInput')
-search_input.send_keys('갤럭시 탭')
-# search_input.send_keys(keyword)
-search_button = driver.find_element_by_css_selector("form[name='frmBoardSearch'] > button")
-search_button.click()
-
+action.send_keys('2970021').key_down(Keys.TAB).send_keys('lchlshp12*').key_down(Keys.TAB).key_down(Keys.TAB).key_down(Keys.ENTER).perform()
+driver.implicitly_wait(10)
 time.sleep(1)
-driver.switch_to.frame("cafe_main")
-
-row = 2
-
-for page in range(1, 2):
-    list = driver.find_elements_by_css_selector('#main-area > div:nth-child(7) > table > tbody > tr')
-    for item in list:
-        title = item.find_element_by_css_selector('a.article').text.strip()
-        title = re.sub('[^0-9a-zA-Zㄱ-힗]', '', title)
-        writer = item.find_element_by_css_selector('a.m-tcol-c').text.strip()
-        ddate = item.find_element_by_css_selector('td.td_date').text.strip()
-        link = item.find_element_by_css_selector('a.article').get_attribute('href')
-
-
-        driver2.get(link)
-        time.sleep(1)
-        driver2.switch_to.frame("cafe_main")
-        try:
-           cost = driver2.find_element_by_css_selector('span.cost').text
-        except NoSuchElementException:
-            cost = 'X'
-
-        sheet1.cell(row=row, column=2).value = title
-        sheet1.cell(row=row, column=2).hyperlink = link
-        sheet1.cell(row=row, column=3).value = writer
-        sheet1.cell(row=row, column=4).value = ddate
-        sheet1.cell(row=row, column=5).value = cost
-
-        row = row + 1
-
-
-    if page % 10 == 0:
-        driver.find_element_by_link_text('다음').click()
-    else:
-        next = str(page + 1)
-        driver.find_element_by_link_text(next).click()
-
-wb.save("./test4.xlsx")
-
-        #item.find_element_by_css_selector('a').click()  #가격을 구하기 위해서
-
-
-
-
-
-
+driver.get('https://tis.sungshin.ac.kr/comm/nxui/staff/sso.do?menuUid=PORTAL_3201&connectDiv=1')
+driver.maximize_window()
