@@ -1,3 +1,18 @@
+# 999 브라우저 띄우지 않고 data 가져오기
+# import requests # import urllib.request
+# from bs4 import BeautifulSoup
+#
+# base_url = 'http://movie.daum.net/moviedb/grade?movieId=2725&type=netizen&page={}'
+#
+# for n in range(77):
+#     url = base_url.format(n + 1)
+#     webpage = requests.get(url).text # webpage = urllib.request.urlopen(url)와 같음
+#     source = BeautifulSoup(webpage, 'html5lib')
+#     reviews = source.find_all('p', {'class': 'desc_review'})
+#
+#     for review in reviews:
+#         print(review.get_text().strip())
+
 
 # 999 포탈 자동로그인 IE는 에러가 계속나서 전자결재는 OPEN안함
 # import os

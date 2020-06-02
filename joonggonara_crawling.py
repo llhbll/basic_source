@@ -97,8 +97,9 @@ for page in range(1, int(page_cnt) + 1):
         link = item.find_element_by_css_selector('a.article').get_attribute('href')
 
         time.sleep(2)
-        driver2.get(link, auth=(user_id, user_pw)) #로긴하고 상세페이지 들어가면 모두 접근가능할 줄 알았는데 중고나라회원에 허용한 page는 접근이 안됨! 추후 방법을 찾아야 함. 현재 실력으로는 불가
-        time.sleep(2)
+        driver2.get(link) #로긴하고 상세페이지 들어가면 모두 접근가능할 줄 알았는데 중고나라회원에 허용한 page는 접근이 안됨! 추후 방법을 찾아야 함. 현재 실력으로는 불가
+        time.sleep(2)     # 리턴data에 noindex, nofollow 그래서 안되는것으로 파악... 그래도 우회하는 방법이 없을려나???
+
         try:
            driver2.switch_to.frame("cafe_main")
            cost = driver2.find_element_by_css_selector('span.cost').text
