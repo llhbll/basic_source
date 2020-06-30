@@ -1,27 +1,30 @@
-# 999 포탈 자동로그인 IE는 에러가 계속나서 전자결재는 OPEN안함
-import os
-import sys
-import time
+from openpyxl import Workbook, load_workbook
 
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
+wb = load_workbook("./data.xlsx")
+sheet = wb.active
+sheet2 = wb.create_sheet('data_sheet', 2)
 
-#pyinstaller --noconsole --onefile --add-binary "chromedriver.exe";"." gmail_auto.py
-if getattr(sys, 'frozen', False):
-    chromedriver_path = os.path.join(sys._MEIPASS, "chromedriver.exe")
-    driver = webdriver.Chrome(chromedriver_path)
-else:
-    driver = webdriver.Chrome()
+# wb1 = Workbook()
+# sheet1 = wb1.active
 
-url = 'https://portal.sungshin.ac.kr/sso/login.jsp'
-driver.get(url)
-action = ActionChains(driver)
-driver.implicitly_wait(10)
-driver.find_element_by_css_selector('#loginId_mobile').click()
+except_str = ['전문교육', '2018', '2020', '2학기', '특근식대', '부서운영비', '바우처']
+inclu_str = ['학점은행', '2019', '1학기']
+data_row = 1
+for row in range(2, sheet.max_row + 1):
+    title = sheet.cell(row=row, column=8).value
+    gubun = sheet.cell(row=row, column=5).value
+    cost = sheet.cell(row=row, column=9).value
 
-action.send_keys('2970021').key_down(Keys.TAB).send_keys('lchlshp12*').key_down(Keys.TAB).key_down(Keys.TAB).key_down(Keys.ENTER).perform()
-driver.implicitly_wait(10)
-time.sleep(1)
-driver.get('https://tis.sungshin.ac.kr/comm/nxui/staff/sso.do?menuUid=PORTAL_3201&connectDiv=1')
-driver.maximize_window()
+    exception_flag = 0
+    for out_word in except_str:
+        if out_word in title:
+            exception_flag = 1
+            break
+
+    if exception_flag == 0:
+        data_row = data_row + 1
+        sheet2.cell(row=data_row, column= 1).value = title
+        sheet2.cell(row=data_row, column= 2).value = cost
+        sheet2.cell(row=data_row, column= 3).value = gubun
+
+wb.save("./data.xlsx")

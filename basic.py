@@ -1,3 +1,33 @@
+
+# 999 한글 file 첨부하기
+# import os
+# import win32com.client as win32
+# hwp = win32.gencache.EnsureDispatch("HWPFrame.HwpObject")
+# hwp.Run("FileNew")
+# hwp.RegisterModule("FilePathCheckDLL", "SecurityMoudle")
+# hwp.Open(r"C:\\Users\\sungshin\\Documents\\성신가족 여러분께.hwp")
+# 
+# BASE_DIR = r"C:\\Users\\sungshin\\Documents"
+# 첨부파일리스트 = os.listdir(BASE_DIR)
+# 
+# def addfile(path):
+#     hwp.HAction.GetDefault("InsertFile", hwp.HParameterSet.HInsertFile.HSet)
+#     hwp.HParameterSet.HInsertFile.filename = path
+#     hwp.HParameterSet.HInsertFile.KeepSection = 1
+#     hwp.HParameterSet.HInsertFile.KeepCharshape = 1
+#     hwp.HParameterSet.HInsertFile.KeepParashape = 1
+#     hwp.HParameterSet.HInsertFile.KeepStyle = 1
+#     hwp.HAction.Execute("InsertFile", hwp.HParameterSet.HInsertFile.HSet)
+#     hwp.HAction.Run("MoveTopLevelEnd")
+#     return
+# 
+# hwp.MovePos(3)
+# 
+# for i in 첨부파일리스트:
+#     if i.endswith("hwp"):
+#         addfile(os.path.join(BASE_DIR, i))
+
+
 # 999 클래스 이름으로 해당html 가져오기
 # import time
 # # 크롬 브라우저 조작을 위한 모듈
