@@ -1,3 +1,18 @@
+
+# 숫자로만 된 일시 file명을 보기좋은 file명으로 변경
+# from glob import glob
+# import os
+#
+# file_list = glob(r"C:\Users\sungshin\Documents\2020*.jpg")
+# Base_Dir = (r"C:\Users\sungshin\Documents")
+# # file_list = os.listdir(Base_Dir)
+#
+# for file in file_list :
+#     new_name = file[28:32] + '년 ' + file[32:34] + '월 ' + file[34:36] + '일 ' + file[36:]
+#     to_file = os.path.join(Base_Dir, new_name)
+#     os.rename(file, to_file)
+
+
 # from glob import glob
 # import os
 # 
@@ -6,7 +21,10 @@
 # for file in file_list :
 #     new_name = file.replace("복사복", "복").replace(" ", "")
 #     os.rename(file, new_name)
-# 
+#
+
+
+# 회귀로 file명 찾기
 # import sys
 # 
 # def search(dirname):
