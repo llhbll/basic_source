@@ -3,15 +3,33 @@
 # from glob import glob
 # import os
 #
-# file_list = glob(r"C:\Users\sungshin\Documents\2020*.jpg")
-# Base_Dir = (r"C:\Users\sungshin\Documents")
-# # file_list = os.listdir(Base_Dir)
-#
-# for file in file_list :
-#     new_name = file[28:32] + '년 ' + file[32:34] + '월 ' + file[34:36] + '일 ' + file[36:]
-#     to_file = os.path.join(Base_Dir, new_name)
-#     os.rename(file, to_file)
+# # file_list = glob(r"C:\Users\pc\Downloads\20200712\2020*.jpg")
+# Base_Dir = (r"C:\Users\pc\Downloads\source")
+# file_list = os.listdir(Base_Dir)
 
+# for file in file_list :
+#     new_name = file[0:4] + '년 ' + file[4:6] + '월 ' + file[6:8] + '일 ' + file[8:]
+#     to_file = os.path.join(Base_Dir, new_name)
+#     from_file = os.path.join(Base_Dir, file)
+#     os.rename(from_file, to_file)
+
+# for (path, dir, files) in os.walk(r"C:\Users\pc\Downloads\Photos"):
+#     for file in files:
+#         new_name = file[0:4] + '년 ' + file[4:6] + '월 ' + file[6:8] + '일 ' + file[8:]
+#         to_file = os.path.join(path, new_name)
+#         from_file = os.path.join(path, file)
+#         os.rename(from_file, to_file)
+
+
+# 폴더 이동
+# idx = 2 # 폴더이름
+# for file in file_list :
+#     new_dir = "C:\\Users\\pc\\Downloads\\Photos\\" + str(idx)
+#     idx  = idx + 1
+#     to_file = os.path.join(new_dir, file)
+#     from_file = os.path.join(Base_Dir, file)
+#     # print(from_file, to_file)
+#     os.rename(from_file, to_file)
 
 # from glob import glob
 # import os
@@ -115,7 +133,25 @@
 # 
 # 
 # 
-# 
-# 
-# 
-# 
+from PIL import Image, ExifTags
+
+for (path, dir, files) in os.walk(r"C:\Users\pc\Downloads\1"):
+    for file in files:
+        filename = os.path.join(path, file)
+        try:
+            image = Image.open(filename)
+            for orientation in ExifTags.TAGS.keys():
+                if ExifTags.TAGS[orientation] == 'Orientation':
+                    break
+            exif = dict(image._getexif().items())
+
+            if exif[orientation] == 3:
+                image = image.rotate(180, expand=True)
+            elif exif[orientation] == 6:
+                image = image.rotate(270, expand=True)
+            elif exif[orientation] == 8:
+                image = image.rotate(90, expand=True)
+
+        except (AttributeError, KeyError, IndexError):
+            # cases: image don't have getexif
+            pass
