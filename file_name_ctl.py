@@ -132,26 +132,29 @@
 # wb.save(r"E:\\2020학년도\\0. 공통업무\\기타\\운캠 지하101호 자산현황.xlsx")
 # 
 # 
-# 
-from PIL import Image, ExifTags
-
-for (path, dir, files) in os.walk(r"C:\Users\pc\Downloads\1"):
-    for file in files:
-        filename = os.path.join(path, file)
-        try:
-            image = Image.open(filename)
-            for orientation in ExifTags.TAGS.keys():
-                if ExifTags.TAGS[orientation] == 'Orientation':
-                    break
-            exif = dict(image._getexif().items())
-
-            if exif[orientation] == 3:
-                image = image.rotate(180, expand=True)
-            elif exif[orientation] == 6:
-                image = image.rotate(270, expand=True)
-            elif exif[orientation] == 8:
-                image = image.rotate(90, expand=True)
-
-        except (AttributeError, KeyError, IndexError):
-            # cases: image don't have getexif
-            pass
+##999 이미지가 up 및 down시 회전오류 발생 시 잡아주기
+# from PIL import Image, ExifTags
+# import os
+#
+# for (path, dir, files) in os.walk(r"C:\Users\sungshin\Documents\aaaa"):
+#     for file in files:
+#         filename = os.path.join(path, file)
+#         try:
+#             image = Image.open(filename)
+#             for orientation in ExifTags.TAGS.keys():
+#                 if ExifTags.TAGS[orientation] == 'Orientation':
+#                     break
+#             exif = dict(image._getexif().items())
+#
+#             if exif[orientation] == 3:
+#                 image = image.rotate(180, expand=True)
+#             elif exif[orientation] == 6:
+#                 image = image.rotate(270, expand=True)
+#             elif exif[orientation] == 8:
+#                 image = image.rotate(90, expand=True)
+#
+#             image.save(filename)
+#
+#         except (AttributeError, KeyError, IndexError):
+#             # cases: image don't have getexif
+#             pass
