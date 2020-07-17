@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 from tqdm import tqdm
 import json
+import random
 
 def getLottoWinInfo(minDrwNo, maxDrwNo):
     drwtNo1 = []
@@ -52,49 +53,69 @@ def Num_Chk(nums):
     return '1'
 
 def input_my_lotte_num():
-    print("1부터 46까지 숫자를 중복없이 6자리 입력하세요 : ")
+    print("1부터 46까지 구간 숫자를 중복없이 스페이스로 구분하여 6개 입력하세요 : (랜덤 6개 : r, 빠져나가기 : q)")
     num_str = input()
-    aa = num_str.split()
+    six_list = num_str.split()
 #    aa = map(int, num_str.split()) #리스트의 문자열을 int형으로
 
-    return aa
+    return six_list
 
 def lotto_match(my_num, lotto_list):
     cnt_1 = cnt_2 = cnt_3 = cnt_4 = cnt_5 = cnt_6 = 0
     for lotto_num in lotto_list:
-        print(lotto_num[0], "회차 : 당첨번호 = ", lotto_num[1:7])
-
         match_num = my_num.intersection(set(lotto_num[1:7]))
+        if len(match_num) >= 3:
+            print(lotto_num[0], "회차 : 추첨일자 = ", lotto_num[1:2], "  당첨번호 = ",  lotto_num[2:8],   "  보너스번호 = ",
+                  lotto_num[8:9], "  1등 당첨인원 = ",lotto_num[11:12], "  1등 수령액 = ", format(int(lotto_num[12:13][0]), ','))
+
         if len(match_num) == 6:
             print("-----------------1등입니다.------------------")
             cnt_1 += 1
-        elif len(match_num) == 5 and match_num.intersection(set(lotto_num[7:8])):
-            print("-----------------2등입니다.")
+        elif len(match_num) == 5 and len(my_num.intersection(set(lotto_num[8:9])))  == 1:
+            print("-----------------2등입니다.------------------")
             cnt_2 += 1
         elif len(match_num) == 5:
-            print("3등입니다. : ", match_num)
+            print("------------------3등입니다.----------------- : ", match_num)
             cnt_3 += 1
         elif len(match_num) == 4:
-            print("4등입니다.", match_num)
+            print("----------4등입니다.----------", match_num)
             cnt_4 += 1
         elif len(match_num) == 3:
             print("5등입니다.", match_num)
             cnt_5 += 1
         else:
-            print("꽝입니다.")
+            # print("꽝입니다.")
             cnt_6 += 1
-    print("꽝 : ", cnt_6, "회", "  5등 : ", cnt_5, "회", "  4등 : ", cnt_4, "회", "  3등 : ", cnt_3, "회", "  2등 : ", cnt_2, "회", "  1등 : ", cnt_1, "회")
+    print("\n 꽝 : ", cnt_6, "회", "  5등 :", cnt_5, "회  ", "  4등 :", cnt_4, "회", "  3등 :", cnt_3, "회",
+          "  2등: ", cnt_2, "회", "  1등 :", cnt_1, "회\n")
+    if cnt_1 != 0 or cnt_2 != 0 or cnt_3 != 0:
+        print("와우 3등이상 당첨되셨을 번호였네요!\n")
 
-my_num = input_my_lotte_num()
-aaa  = Num_Chk(my_num)
-if  aaa == '1':
-    my_num_int = map(int, my_num)
-    set_my_num = set(my_num_int)
-    df_aa = getLottoWinInfo(50, 150)
-    aa_list = df_aa.values.tolist()
-    lotto_match(set_my_num, aa_list)
-else:
-    print(aaa)
+cnt = 0
+while 1:
+    my_num = input_my_lotte_num()
+    if my_num[0][0] == 'q':
+        break
+    if my_num[0][0] == 'r':
+        aaa = '1'
+        tmp_set = set()
+        while len(tmp_set) < 6:
+            tmp_set.add(random.randrange(1, 46))
+        my_num = list(tmp_set)
+    else:
+        aaa  = Num_Chk(my_num)
+    if  aaa == '1':
+
+        my_num_int = map(int, my_num)
+        set_my_num = set(my_num_int)
+        print(set_my_num)
+    #    df_aa = getLottoWinInfo(1, 919) 로또사이트의api를 이용하여 로또당첨번호 읽어와서 df로
+    #    df_aa.to_excel("lotto_list.xlsx")
+        df_aa = pd.read_excel('lotto_list.xlsx', sheet_name='Sheet1')
+        aa_list = df_aa.values.tolist()
+        lotto_match(set_my_num, aa_list)
+    else:
+        print(aaa)
 
 
 # print(aa_list)
