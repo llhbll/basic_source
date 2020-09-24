@@ -63,7 +63,7 @@ def input_my_lotte_num():
 def lotto_match(my_num, lotto_list):
     cnt_1 = cnt_2 = cnt_3 = cnt_4 = cnt_5 = cnt_6 = 0
     for lotto_num in lotto_list:
-        match_num = my_num.intersection(set(lotto_num[1:7]))
+        match_num = my_num.intersection(set(lotto_num[2:8]))
         if len(match_num) >= 3:
             print(lotto_num[0], "회차 : 추첨일자 = ", lotto_num[1:2], "  당첨번호 = ",  lotto_num[2:8],   "  보너스번호 = ",
                   lotto_num[8:9], "  1등 당첨인원 = ",lotto_num[11:12], "  1등 수령액 = ", format(int(lotto_num[12:13][0]), ','))
@@ -117,12 +117,59 @@ while 1:
     else:
         print(aaa)
 
-
-# print(aa_list)
-
-# print(aa.index, aa.values[])
-# lotto_old_list._combine_match_columns()
-# for i in range(0, 3):
-#     print(lotto_old_list.index[i])
-#     print(lotto_old_list.columns[i][2])
-##출처##  [솜씨좋은장씨]
+# 999 지난 로또 당첨 번호와 비교하여 엑셀에서 읽어와
+# import pandas as pd
+# import requests
+# from tqdm import tqdm
+# import json
+# import random
+#
+# def lotto_match(my_num, lotto_list):
+#     cnt_1 = cnt_2 = cnt_3 = cnt_4 = cnt_5 = cnt_6 = 0
+#     for lotto_num in lotto_list:
+#         match_num = my_num.intersection(set(lotto_num[2:8]))
+#         if len(match_num) >= 5:
+#             print(my_num)
+#             print(lotto_num[0], "회차 : 추첨일자 = ", lotto_num[1:2], "  당첨번호 = ",  lotto_num[2:8],   "  보너스번호 = ",
+#                   lotto_num[8:9], "  1등 당첨인원 = ",lotto_num[11:12], "  1등 수령액 = ", format(int(lotto_num[12:13][0]), ','))
+#
+#         if len(match_num) == 6:
+#             print("-----------------1등입니다.------------------")
+#             cnt_1 += 1
+#             return 1
+#         elif len(match_num) == 5 and len(my_num.intersection(set(lotto_num[8:9])))  == 1:
+#             print("-----------------2등입니다.------------------")
+#             cnt_2 += 1
+#         elif len(match_num) == 5:
+#             print("------------------3등입니다.----------------- : ", match_num)
+#             cnt_3 += 1
+#         elif len(match_num) == 4:
+#             # print("----------4등입니다.----------", match_num)
+#             cnt_4 += 1
+#         elif len(match_num) == 3:
+#             # print("5등입니다.", match_num)
+#             cnt_5 += 1
+#         else:
+#             # print("꽝입니다.")
+#             cnt_6 += 1
+#     # print("\n 꽝 : ", cnt_6, "회", "  5등 :", cnt_5, "회  ", "  4등 :", cnt_4, "회", "  3등 :", cnt_3, "회",
+#     #       "  2등: ", cnt_2, "회", "  1등 :", cnt_1, "회\n")
+#
+#
+# cnt = 0
+# df_aa = pd.read_excel('lotto_list.xlsx', sheet_name='Sheet1')
+# aa_list = df_aa.values.tolist()
+# while 1:
+#     cnt += 1
+#     tmp_set = set()
+#     while len(tmp_set) < 6:
+#         tmp_set.add(random.randrange(1, 46))
+#     my_num = list(tmp_set)
+#
+#     my_num_int = map(int, my_num)
+#     set_my_num = set(my_num_int)
+#
+#     aa = lotto_match(set_my_num, aa_list)
+#     if aa == 1:
+#         print(cnt, " 째만에 1등")
+#         break

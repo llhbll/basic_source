@@ -136,7 +136,7 @@
 # from PIL import Image, ExifTags
 # import os
 #
-# for (path, dir, files) in os.walk(r"C:\Users\sungshin\Documents\aaaa"):
+for (path, dir, files) in os.walk(r"C:\Users\sungshin\Documents\aaaa"):
 #     for file in files:
 #         filename = os.path.join(path, file)
 #         try:

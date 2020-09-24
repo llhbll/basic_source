@@ -1,30 +1,10 @@
-from openpyxl import Workbook, load_workbook
+data = {}
+data['영희'] = (80, 95, 90)
+data['철수'] = (90, 80, 70)
+data['혜영'] = (70, 100, 90)
+print(data) # sorted(data.items(), key=lambda x: x[1][0], reverse=False) # sort(1, 2, 3) --> 1 번째 iteratable 파라미터가 하나씩 2번째 수식에 대입되어 돌아 간다. # key=lambda x: x[0] 은 key 로 소팅을 의미 x[1] 은 데이터를 의미 x[1][0] 은 데이터 중에 0번째 항목 print('tuple 의 1번째 항목으로 소팅') data2 = sorted(data.items(), key=lambda x: x[1][0], reverse=False) print(data2)
 
-wb = load_workbook("./data.xlsx")
-sheet = wb.active
-sheet2 = wb.create_sheet('data_sheet', 2)
+print('tuple 의 1번째 항목으로 소팅')
+data2 = sorted(data.items(), key=lambda x: x[1][0], reverse=False)
+print(data2)
 
-# wb1 = Workbook()
-# sheet1 = wb1.active
-
-except_str = ['전문교육', '2018', '2020', '2학기', '특근식대', '부서운영비', '바우처']
-inclu_str = ['학점은행', '2019', '1학기']
-data_row = 1
-for row in range(2, sheet.max_row + 1):
-    title = sheet.cell(row=row, column=8).value
-    gubun = sheet.cell(row=row, column=5).value
-    cost = sheet.cell(row=row, column=9).value
-
-    exception_flag = 0
-    for out_word in except_str:
-        if out_word in title:
-            exception_flag = 1
-            break
-
-    if exception_flag == 0:
-        data_row = data_row + 1
-        sheet2.cell(row=data_row, column= 1).value = title
-        sheet2.cell(row=data_row, column= 2).value = cost
-        sheet2.cell(row=data_row, column= 3).value = gubun
-
-wb.save("./data.xlsx")
